@@ -1,12 +1,15 @@
-description "Hello world Deamon"
+var http = require("http")
 
-# Start when the system is ready to do networking.
-start on started elastic-network-interfaces
+http.createServer(function (request, response) {
 
-# Stop when the system is on its way down.
-stop on shutdown
+   // Send the HTTP header
+   // HTTP Status: 200 : OK
+   // Content Type: text/plain
+   response.writeHead(200, {'Content-Type': 'text/plain'})
 
-respawn
-script
-    exec su --session-command="/usr/bin/node /home/ec2-user/helloworld.js" ec2-user
-end script
+   // Send the response body as "Hello World"
+   response.end('Hello World\n')
+}).listen(3000)
+
+// Console will print the message
+console.log('Server running')
